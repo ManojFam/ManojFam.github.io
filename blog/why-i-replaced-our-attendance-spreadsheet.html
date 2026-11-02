@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Why I replaced our attendance spreadsheet · Manoj Kandel</title>
+  <meta name="description" content="How and why Manoj Kandel replaced monthly Excel attendance files with a Django web app.">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="wrap bar">
+    <a class="brand" href="../index.html"><span>MK</span>Manoj Kandel</a>
+    <nav aria-label="Main">
+      <a href="../index.html">Home</a>
+      <a href="../about.html">About</a>
+      <a href="../projects.html">Projects</a>
+      <a href="index.html" aria-current="page">Blog</a>
+      <a href="../index.html#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main id="main" class="wrap">
+    <article class="article">
+      <a class="back" href="index.html">← All posts</a>
+      <p class="date">November 2026 · 3 min read</p>
+      <h1>Why I replaced our attendance spreadsheet</h1>
+
+      <p>Our English courses used Excel to track attendance. It worked, but every month started a new file. If you wanted to know a student's attendance across their whole course, you had to open several files and add them up by hand.</p>
+
+      <h2>What I built</h2>
+      <p>A Django web app. Trainers pick their class and date and mark each student Present, Absent or Leave. The app already knows which days each class runs, so it creates the sessions by itself, even for students who join halfway through.</p>
+      <p>Admin staff get a report for every student, a flag for anyone under 80%, and a CSV export when they need it in Excel.</p>
+
+      <h2>The formula was the hard part</h2>
+      <p>It sounds simple, but the details matter. What about a public holiday? A cancelled class? A session nobody marked yet? I settled on one rule and put it in one place in the code:</p>
+      <blockquote>Present ÷ (sessions so far − holidays − cancelled) × 100</blockquote>
+      <p>Absent and Leave both stay in the count. Future sessions never count. Unmarked sessions are shown on their own line, so staff can spot them and fix them.</p>
+
+      <h2>Never lose what's already entered</h2>
+      <p>Classes sometimes change their days. When that happens, only sessions from today onwards move. Attendance that's already entered is never deleted.</p>
+
+      <h2>What I learned</h2>
+      <p>A good internal tool is less about clever code and more about getting the rules right with the people who use it.</p>
+
+      <p><a href="https://github.com/ManojFam/Attendance-system" target="_blank" rel="noopener">See the code on GitHub →</a></p>
+    </article>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span>© <span data-year>2026</span> Manoj Kandel · Melbourne, Australia</span>
+      <span><a href="https://github.com/ManojFam" target="_blank" rel="noopener">GitHub</a> · <a href="https://www.linkedin.com/in/manoj-kandel" target="_blank" rel="noopener">LinkedIn</a></span>
+    </div>
+  </footer>
+
+  <script src="../assets/main.js"></script>
+</body>
+</html>

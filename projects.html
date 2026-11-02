@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Projects · Manoj Kandel</title>
+  <meta name="description" content="Tools Manoj Kandel has built: a Django attendance system, a PowerShell IT support toolkit, a network health checker and more.">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="wrap bar">
+    <a class="brand" href="index.html"><span>MK</span>Manoj Kandel</a>
+    <nav aria-label="Main">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="projects.html" aria-current="page">Projects</a>
+      <a href="blog/index.html">Blog</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <div class="wrap page-head">
+      <p class="eyebrow">Projects</p>
+      <h1>Things I've built</h1>
+      <p class="lede">Most of these started with a job I was doing by hand at work. Each one is on GitHub with a README you can follow.</p>
+    </div>
+
+    <section>
+      <div class="wrap">
+        <div class="projects">
+          <article class="project" id="attendance">
+            <div>
+              <h2 class="h3">Attendance Management System</h2>
+              <div class="meta"><span class="tag">Python</span><span class="tag">Django</span><span class="tag">SQLite</span><span class="tag">Used at work</span></div>
+              <p class="why">Our English courses tracked attendance in Excel. Every month meant another file, and nobody could quickly see a student's overall attendance. I built a web app to replace it.</p>
+              <ul>
+                <li>Trainers mark Present, Absent or Leave in the browser, with a "set everyone Present" shortcut</li>
+                <li>Class sessions are created automatically from each group's teaching days</li>
+                <li>Admin staff get reports, flags for students under 80%, and CSV export</li>
+                <li>Changing a class schedule never deletes attendance already entered</li>
+              </ul>
+              <a class="repo" href="https://github.com/ManojFam/Attendance-system" target="_blank" rel="noopener">View on GitHub →</a>
+            </div>
+            <div>
+<pre class="term"><span class="c"># the one formula every report uses</span>
+<span class="f">Attendance %</span> = Present
+             / (Sessions to date
+                − Holiday − Cancelled)
+             × 100
+
+<span class="c"># Absent and Leave stay in the count.
+# Future sessions are never counted.</span></pre>
+              <p class="term-cap">One formula in one place, so the trainer page, the admin and the reports always agree. <a href="blog/why-i-replaced-our-attendance-spreadsheet.html">Read the story</a>.</p>
+            </div>
+          </article>
+
+          <article class="project" id="toolkit">
+            <div>
+              <h2 class="h3">IT Support Toolkit</h2>
+              <div class="meta"><span class="tag">PowerShell</span><span class="tag">Active Directory</span><span class="tag">Entra ID</span><span class="tag">GitHub Actions</span></div>
+              <p class="why">A PowerShell module for the everyday jobs on a service desk.</p>
+              <ul>
+                <li>Onboard new starters: account, temporary password and department groups</li>
+                <li>Offboard leavers: disable, remove groups and keep an audit log</li>
+                <li>System health report as an HTML page, and software inventory to CSV</li>
+                <li>A mock directory and <code>-WhatIf</code> let you try it safely without a domain</li>
+              </ul>
+              <a class="repo" href="https://github.com/ManojFam/it-support-toolkit-ps" target="_blank" rel="noopener">View on GitHub →</a>
+            </div>
+            <div>
+<pre class="term"><span class="p">PS&gt;</span> Import-Csv .\new-starters.csv |
+      New-ITUser -Directory Mock
+
+SamAccountName Department  Status
+-------------- ----------  ------
+jordan.lee     IT          <span class="up">Created</span>
+riley.morgan   Finance     <span class="up">Created</span>
+sam.taylor     Student Svc <span class="up">Created</span>
+casey.nguyen   Training    <span class="up">Created</span></pre>
+              <p class="term-cap">Tested on Windows PowerShell 5.1 and PowerShell 7 in CI.</p>
+            </div>
+          </article>
+
+          <article class="project" id="netcheck">
+            <div>
+              <h2 class="h3">Network Health Checker</h2>
+              <div class="meta"><span class="tag">Python</span><span class="tag">CLI</span><span class="tag">Networking</span></div>
+              <p class="why">Most network tickets start with the same question: what is up, what is down, and what is half-working? <code>netcheck</code> answers it.</p>
+              <ul>
+                <li>Pings each device and checks the ports it should have open</li>
+                <li>Sweeps a subnet to find live hosts</li>
+                <li>Saves CSV and HTML reports you can attach to a ticket</li>
+                <li>Uses Nagios-style exit codes, so it can raise alerts from Task Scheduler or monitoring tools</li>
+              </ul>
+              <a class="repo" href="https://github.com/ManojFam/network-health-checker" target="_blank" rel="noopener">View on GitHub →</a>
+            </div>
+            <div>
+<pre class="term"><span class="p">$</span> netcheck check demo-public.yaml
+STATUS    NAME                  PING
+<span class="up">UP</span>        Cloudflare DNS        20 ms
+<span class="up">UP</span>        Google DNS            13 ms
+<span class="deg">DEGRADED</span>  Cloudflare DNS (SSH)  13 ms
+<span class="down">DOWN</span>      Old printer (offline) -
+
+4 device(s): 2 UP, 1 DEGRADED, 1 DOWN</pre>
+              <p class="term-cap">A real run against public DNS servers.</p>
+            </div>
+          </article>
+
+          <article class="project" id="helpdesk">
+            <div>
+              <h2 class="h3">Helpdesk Ticket Tracker</h2>
+              <div class="meta"><span class="tag">Python</span><span class="tag">Django</span><span class="tag wip">In progress</span></div>
+              <p class="why">A small help desk where staff raise tickets and IT works through them by priority.</p>
+              <ul>
+                <li>P1 to P4 priorities, each with its own response and resolution deadline</li>
+                <li>Statuses from New to Resolved, including "Waiting on requester"</li>
+                <li>IT staff see every ticket; everyone else sees only their own</li>
+              </ul>
+            </div>
+            <div>
+<pre class="term"><span class="c"># tickets sorted by what's due first</span>
+#14  <span class="down">P1 - Critical</span>  Wi-Fi down, Level 2
+#11  <span class="deg">P2 - High</span>      Lab PC won't boot
+#09  P3 - Medium    Teams mic not working
+#07  P4 - Low       New mouse for reception</pre>
+              <p class="term-cap">Example tickets showing how the queue is ordered.</p>
+            </div>
+          </article>
+        </div>
+
+        <div class="smaller">
+          <div><b>Handwriting Recognition</b><span>A neural network trained on image pixel data. It reached 93% accuracy on the test set. (University project, Python)</span></div>
+          <div><b>Bandwidth Management with VLANs</b><span>A segmented VLAN network with inter-VLAN routing, built to explore bandwidth needs. (University project, networking)</span></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span>© <span data-year>2026</span> Manoj Kandel · Melbourne, Australia</span>
+      <span><a href="https://github.com/ManojFam" target="_blank" rel="noopener">GitHub</a> · <a href="https://www.linkedin.com/in/manoj-kandel" target="_blank" rel="noopener">LinkedIn</a></span>
+    </div>
+  </footer>
+
+  <script src="assets/main.js"></script>
+</body>
+</html>
